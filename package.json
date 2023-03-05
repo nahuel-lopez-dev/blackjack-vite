@@ -10,5 +10,9 @@
   },
   "devDependencies": {
     "vite": "^4.1.0"
+  },
+  "dependencies": {
+    "@types/underscore": "^1.11.4",
+    "underscore": "^1.13.6"
   }
 }
