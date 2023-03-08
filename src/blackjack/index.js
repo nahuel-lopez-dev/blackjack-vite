@@ -1,4 +1,5 @@
 import _ from 'underscore';
+// import { crearDeck as crearNuevoDeck } from './usecases/crear-deck';
 import { crearDeck } from './usecases/crear-deck';
 
 /** C: clubs (tréboles), D: diamonds (diamantes, H: hearts (corazones), S: spades (espadas) */
@@ -20,6 +21,7 @@ const divCartasComputadora = document.querySelector('#computadora-cartas');
 
 const puntosHTML = document.querySelectorAll('small');
 
+// deck = crearNuevoDeck(tipos, especiales);
 deck = crearDeck(tipos, especiales);
 
 
@@ -119,7 +121,7 @@ btnNuevo.addEventListener('click', () => {
 
     console.clear();
     deck = [];
-    deck = crearDeck();
+    deck = crearDeck(tipos, especiales);
 
     puntosJugador     = 0;
     puntosComputadora = 0;
