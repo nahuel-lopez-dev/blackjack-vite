@@ -1,9 +1,11 @@
 import _ from 'underscore';
 // import { crearDeck as crearNuevoDeck } from './usecases/crear-deck';
 import { crearDeck } from './usecases/crear-deck';
+import { pedirCarta } from './usecases/pedir-carta';
+import { valorCarta } from './usecases/valor-carta';
 
 /** C: clubs (tréboles), D: diamonds (diamantes, H: hearts (corazones), S: spades (espadas) */
-// Arrays
+// Variables y Arrays
 let deck         = [];
 const tipos      = ['C','D','H','S'];
 const especiales = ['A','J','Q','K'];
@@ -24,36 +26,15 @@ const puntosHTML = document.querySelectorAll('small');
 // deck = crearNuevoDeck(tipos, especiales);
 deck = crearDeck(tipos, especiales);
 
-
-// Esta función me permite tomar una carta
-const pedirCarta = () => {
-
-    if ( deck.length === 0 ) {
-        throw 'No hay cartas en el deck';
-    }
-    const carta = deck.pop();
-    return carta;
-}
-
-// pedirCarta();
-const valorCarta = ( carta ) => {
-
-    const valor = carta.substring(0, carta.length - 1);
-    return ( isNaN( valor ) ) ? 
-            ( valor === 'A' ) ? 11 : 10
-            : valor * 1;
-}
-
 // turno de la computadora
 const turnoComputadora = ( puntosMinimos ) => {
 
     do {
-        const carta = pedirCarta();
+        const carta = pedirCarta(deck);
 
         puntosComputadora = puntosComputadora + valorCarta( carta );
         puntosHTML[1].innerText = puntosComputadora;
         
-        // <img class="carta" src="assets/cartas/2C.png">
         const imgCarta = document.createElement('img');
         imgCarta.src = `assets/cartas/${ carta }.png`; //3H, JD
         imgCarta.classList.add('carta');
@@ -78,17 +59,14 @@ const turnoComputadora = ( puntosMinimos ) => {
     }, 100 );
 }
 
-
-
 // Eventos
 btnPedir.addEventListener('click', () => {
 
-    const carta = pedirCarta();
+    const carta = pedirCarta(deck);
     
     puntosJugador = puntosJugador + valorCarta( carta );
     puntosHTML[0].innerText = puntosJugador;
     
-    // <img class="carta" src="assets/cartas/2C.png">
     const imgCarta = document.createElement('img');
     imgCarta.src = `assets/cartas/${ carta }.png`; //3H, JD
     imgCarta.classList.add('carta');
@@ -106,9 +84,7 @@ btnPedir.addEventListener('click', () => {
         btnDetener.disabled = true;
         turnoComputadora( puntosJugador );
     }
-
 });
-
 
 btnDetener.addEventListener('click', () => {
     btnPedir.disabled   = true;
@@ -134,5 +110,4 @@ btnNuevo.addEventListener('click', () => {
 
     btnPedir.disabled   = false;
     btnDetener.disabled = false;
-
 });
